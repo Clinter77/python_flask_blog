@@ -1,0 +1,150 @@
+python_flask_blog_developpez_com
+
+Sur developpez.com
+Autres cours tutoriel sur Flask :
+Developpez.com : https://python.developpez.com/tutoriel/intro-flask-python3/
+
+Création de l'environnement virtuel (venv sera aussi le nom du répertoire, car venv venv) : python3 -m venv venv
+Si jamais j'ai besoin de le supprimer, aller au bon endroit dans l'arborescence où le venv folder se trouve puis saisir : rm -rf venv
+rm -rf name_of_folder
+
+Activation de l'environnement virtuel : source .venv/bin/activate (à la place de source .venv/bin/activate, car le répertoire n'est plus .venv mais plutôt venv dans ce projet)
+Vérification que l'environnement virtuel est bien activé : (venv) christophe@WX-OR7526317:~/projets-formation/python_flask_blog
+Désactivation de celui-ci : deactivate
+
+Installation de la librairie Flask : pip install flask
+
+Avant de commencer à suivre ce guide, vous aurez besoin des éléments suivants :
+
+un environnement de programmation Python 3 local (NDLR. Voir venv — Création d'environnements virtuels). Dans ce tutoriel, nous appellerons notre répertoire de projet flask_blog ;
+une compréhension des concepts de Python 3, tels que les types de données, les instructions conditionnelles, les boucles, les fonctions et autres concepts de ce type. (NDLR. Si vous n'êtes pas familiarisé avec Python, voir Les meilleurs cours et tutoriels pour apprendre Python).
+Lien vers Les meilleurs cours et tutoriels pour apprendre Python : https://python.developpez.com/cours/
+
+Une fois l'installation terminée, exécutez la commande suivante pour confirmer l'installation :
+python -c "import flask; print(flask.__version__)"
+python3 -c "import flask; print(flask.__version__)"
+en sortie : 
+<string>:1: DeprecationWarning: The '__version__' attribute is deprecated and will be removed in Flask 3.1. Use feature detection or 'importlib.metadata.version("flask")' instead.
+3.0.3
+
+La sortie sera un numéro de version : dans mon cas, la 3.0.3
+majeur.mineur.patch
+
+Vous avez créé le dossier du projet, un environnement virtuel et installé Flask. Vous êtes maintenant prêt à configurer votre application de base.
+
+Maintenant que vous avez configuré votre environnement de programmation, vous allez commencer à utiliser Flask. Dans cette étape, vous allez créer une petite application web dans un fichier Python et l'exécuter pour démarrer le serveur, qui affichera certaines informations sur le navigateur.
+
+Dans votre répertoire flask_blog, ouvrez un fichier nommé hello.py pour le modifier. Utilisez nano ou votre éditeur de texte préféré :
+nano hello.py
+
+Ce fichier hello.py servira d'exemple minimal de la manière de traiter les requêtes HTTP. À l'intérieur de ce fichier, vous importerez l’objet Flask et créerez une fonction qui renvoie une réponse HTTP. Écrivez le code suivant à l'intérieur de hello.py :
+
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello():
+    return 'Hello, World!'
+
+Dans le bloc de code précédent, vous importez d'abord l'objet Flask du paquet flask. Vous l'utilisez ensuite pour créer votre instance d'application Flask avec le nom app. Vous passez la variable spéciale __name__ qui contient le nom du module Python actuel. Il est utilisé pour indiquer à l'instance où elle se trouve - vous en avez besoin, car Flask établit certains chemins en coulisses.
+
+Une fois que vous avez créé l'instance de l'application, vous l'utilisez pour traiter les demandes web entrantes et envoyer des réponses à l'utilisateur. @app.route est un décorateur (NDLR. Voir Les décorateurs) qui transforme une fonction Python ordinaire en une fonction d'affichage Flask et qui convertit la valeur de retour de la fonction en une réponse HTTP à afficher par un client HTTP, tel qu'un navigateur web. Vous passez la valeur '/' à @app.route pour indiquer que cette fonction répondra aux requêtes web pour la racine du site.
+
+La fonction d'affichage hello() renvoie la chaîne "Hello, World!" comme réponse.
+
+Enregistrez et fermez le fichier.
+Ctrl + o 
+File name to write : hello.py 	cliquer dans le nom du fichier, s'assurer du nom de celui-ci, appuyer sur Entrée
+Ctrl + x
+
+-------------
+
+Don’t forget:
+
+Typing nano gets you into the Nano editor in WSL
+CTRL + o saves a Nano file
+CTRL + X exits Nano
+
+If you press Y to save changes, it will show the filename again and you have to press the Enter key and it will close nano and drop you to the terminal.
+
+You can also press N to discard changes and exit or Ctrl+c to cancel exiting and continue editing.
+
+-------------
+Pour exécuter votre application web, vous devez d'abord indiquer à Flask où trouver l'application (le fichier hello.py dans votre cas) avec la variable d'environnement FLASK_APP :
+commande : export FLASK_APP=hello
+
+Ensuite, exécutez-la en mode développement avec la variable d'environnement FLASK_ENV :
+commande : export FLASK_ENV=development
+
+Pour terminer, exécutez l'application en utilisant la commande flask run :
+commande : flask run
+
+(venv) christophe@WX-OR7526317:~/projets-formation/python_flask_blog$ python3 -c "import flask; print(flask.__version__)"
+<string>:1: DeprecationWarning: The '__version__' attribute is deprecated and will be removed in Flask 3.1. Use feature detection or 'importlib.metadata.version("flask")' instead.
+3.0.3
+(venv) christophe@WX-OR7526317:~/projets-formation/python_flask_blog$ nano hello.py
+(venv) christophe@WX-OR7526317:~/projets-formation/python_flask_blog$ nano hello.py
+(venv) christophe@WX-OR7526317:~/projets-formation/python_flask_blog$ export FLASK_APP=hello
+(venv) christophe@WX-OR7526317:~/projets-formation/python_flask_blog$ export FLASK_ENV=development
+(venv) christophe@WX-OR7526317:~/projets-formation/python_flask_blog$ flask run
+
+En sortie, après la commande flask run pour démarrer le Serveur Web : 
+ * Serving Flask app 'hello'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+127.0.0.1 - - [29/Apr/2024 09:12:24] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Apr/2024 09:12:24] "GET /favicon.ico HTTP/1.1" 404 -
+
+Une fois l'application lancée, la sortie sera quelque chose comme ceci :
+
+ Sélectionnez
+* Serving Flask app "hello" (lazy loading)
+ * Environment: development
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 813-894-335
+La sortie précédente contient plusieurs éléments d'information, tels que :
+
+le nom de l'application que vous exécutez ;
+l'environnement dans lequel l'application est exécutée ;
+le mode de débogage : Debug mode: on signifie que le débogueur Flask est en cours d'exécution. Ceci est utile lors du développement, car il nous donne des messages d'erreur détaillés lorsque les choses tournent mal, ce qui facilite le dépannage ;
+l’adresse d’exécution locale de l'application qui est ici l'URL http://127.0.0.1:5000/, où 127.0.0.1 est l'IP qui représente le localhost de votre machine et :5000 est le numéro du port.
+Ouvrez un navigateur et tapez l'URL http://127.0.0.1:5000/, vous recevrez la chaîne de caractères Hello, World! en réponse, cela confirme que votre application fonctionne correctement.
+
+Dans mon cas le Debug mode est sur off.
+
+Flask utilise un simple serveur web pour servir notre application dans un environnement de développement, ce qui signifie également que le débogueur Flask est en cours d'exécution pour faciliter la capture des erreurs. Ce serveur de développement ne doit pas être utilisé dans un déploiement de production. Consultez la page des options de déploiement dans la documentation Flask pour plus d'informations.
+Lien vers les options de déploiement : https://flask.palletsprojects.com/en/2.0.x/deploying/
+
+Quand on effectue des modifications, il faut les enregistrer, couper le Serveur Ctrl + C puis le re-démarrer : flask run
+
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello():
+    # return 'Hello World !'
+    return '<h3 style="color:blue;">Welcome on my Web site :)</h3>'
+
+Quand on effectue des modifications, il faut les enregistrer, couper le Serveur Ctrl + C puis le re-démarrer : flask run
+
+Reprendre à partir du paragraphe en fond jaune.
+
+
+
+
+
+
+
+
+
+
+
